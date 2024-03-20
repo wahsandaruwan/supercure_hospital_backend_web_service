@@ -1,0 +1,18 @@
+{
+  "name": "super_cure_hospital_backend_web_service",
+  "version": "1.0.0",
+  "description": "This is the Super Cure hospital's backend web service developed using Node JS, Express JS and Mongo DB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "super",
+    "cure",
+    "hospital",
+    "appointments",
+    "chatbot"
+  ],
+  "author": "wahsandaruwan",
+  "license": "ISC"
+}
