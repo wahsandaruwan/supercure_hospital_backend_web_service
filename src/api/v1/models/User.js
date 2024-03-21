@@ -1,13 +1,21 @@
 // -------------------- Third party libraries and modules --------------------
-const mangoose = require("mongoose");
+const mongoose = require("mongoose");
 
 // ---------- User schema -----------
-const UserSchema = new mangoose.Schema({
+const UserModel = new mongoose.Schema({
     fullName: {
         type: String,
         required: true,
       },
     emailAddress: {
+        type: String,
+        required: true,
+      },
+    nicNumber: {
+        type: String,
+        required: true,
+      },
+    address: {
         type: String,
         required: true,
       },
@@ -44,4 +52,4 @@ const UserSchema = new mangoose.Schema({
       }
 }, {timestamps: true});
 
-module.exports = mangoose.model("User" , UserSchema);
+module.exports = mongoose.model("Users" , UserModel);

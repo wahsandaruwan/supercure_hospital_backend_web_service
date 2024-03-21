@@ -1,9 +1,8 @@
 // -------------------- Third party libraries and modules --------------------
-const { default: mongoose } = require("mongoose");
-const mangoose = require("mongoose");
+const mongoose = require("mongoose");
 
 // ---------- Doctor schema -----------
-const DoctorModel = new mangoose.Schema({
+const DoctorModel = new mongoose.Schema({
     degree:{
         type:String,
         require: true
@@ -11,6 +10,6 @@ const DoctorModel = new mangoose.Schema({
     specialty: {
         type: String
     },
-});
+},{timestamps: true});
 
-module.exports = mongoose.model("Doctor" , DoctorModel)
+module.exports = mongoose.model("Doctors" , DoctorModel);
