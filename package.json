@@ -4,6 +4,7 @@
   "description": "This is the Super Cure hospital's backend web service developed using Node JS, Express JS and Mongo DB.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,5 +15,11 @@
     "chatbot"
   ],
   "author": "wahsandaruwan",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "mongoose": "^8.2.2",
+    "nodemon": "^3.1.0"
+  }
 }
