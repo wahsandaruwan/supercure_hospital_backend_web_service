@@ -79,4 +79,110 @@ const RegisterNewUser = async(req, res) =>{
       }
 };
 
-module.exports = { RegisterNewUser };
+// -------------------- Function to Login user ------------------------
+const LoginUser = async(req , res) => {
+    // Request body
+    const { emailAddress, password } = req.body;
+
+    try {
+       // Check emailAddress already exist or not
+       const User = await UserModel.findOne({emailAddress}).exec(); 
+
+       if(!User){
+        return res.status(401).json({
+            status:false,
+            error: {
+                message: "Wrong Email Address!"
+            }
+        });
+       }
+
+       // Check Password Match or not
+       const PasswordMatch = await bcrypt.compare(password , User.password);
+
+       if(!PasswordMatch){
+        return res.status(401).json({
+            status: false,
+            error: {
+                message: "Wrong Password!"
+            }
+        });
+       }
+
+       return res.status(200).json({
+        status: true,
+        success: {
+            message: "Login Success!"
+        }
+       });
+
+    } catch (error) {
+       console.log(error);
+       res.status(500).json({
+        status: false,
+        error: {
+            message: "Login failed due to server error!"
+        }
+       });
+    }
+};
+
+// ------------------- Get All Users --------------------
+const GetAllUsers = async(req , res) => {
+    try {
+        const AllUsers = await UserModel.find().exec();
+
+        return res.status(200).json({
+            status:true,
+            users: AllUsers,
+            success:{
+                message: "Success!"
+            }
+        })
+    } catch (error) {
+        
+    }
+}
+
+// -------------------- Function to Delete User ------------------------
+const DeleteUser = async(req , res) => {
+    // Get userId from the url
+    const { UserId } = req.params;
+    
+    try {
+
+        // Check UserId already exsits or not
+        const User = await UserModel.findOne({_id:UserId}).exec();
+
+        if(!User){
+            return res.status(404).json({
+                status: false,
+                error: {
+                    message: "No user found for the provided user id!"
+                }
+            });
+        }
+
+        const DeleteUser =  await User.deleteOne();
+
+        if(DeleteUser){
+            return res.status(200).json({
+                status: true,
+                success: {
+                    message: "User delete successfully!"
+                }
+            });
+        }
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            status:false,
+            error:{
+              message: "Failed to delete user due to server error!"
+            }  
+        })
+    }
+}
+
+module.exports = { RegisterNewUser , LoginUser , GetAllUsers , DeleteUser };
