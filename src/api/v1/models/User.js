@@ -40,15 +40,19 @@ const UserModel = new mongoose.Schema({
       },
     dateCreated: {
         type: String,
+        required: true,
       },
     timeCreated: {
         type: String,
+        required: true,
       },
     dateUpdated: {
         type: String,
+        required: true,
       },
     timeUpdated: {
         type: String,
+        required: true,
       }
 }, {timestamps: true});
 

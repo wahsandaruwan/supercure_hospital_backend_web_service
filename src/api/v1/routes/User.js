@@ -2,7 +2,13 @@
 const express = require("express");
 
 // -------------------- Custom libraries and modules --------------------
-const { RegisterNewUser ,LoginUser , GetAllUsers , GetUserById , UpdateUserById ,  DeleteUser } = require("../controllers");
+const { 
+    RegisterNewUser,
+    LoginUser,
+    GetAllUsers, 
+    GetUserById,
+    UpdateUserById,
+    DeleteUser, } = require("../controllers");
 
 
 // --------------- Initialize the Router ---------------

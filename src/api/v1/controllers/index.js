@@ -1,6 +1,6 @@
 // -------------------- Imports --------------------
 const { RegisterNewUser , LoginUser , GetAllUsers , GetUserById ,  UpdateUserById , DeleteUser } = require("./User");
-
+const { SaveDoctorDetails , GetDoctorDetailsById , UpdateDoctorDetails ,  DeleteDetails } = require("./Doctor");
 // -------------------- Exports --------------------
 module.exports = {
     RegisterNewUser,
@@ -9,4 +9,8 @@ module.exports = {
     GetAllUsers,
     GetUserById,
     UpdateUserById,
+    SaveDoctorDetails,
+    GetDoctorDetailsById,
+    UpdateDoctorDetails,
+    DeleteDetails,
 };

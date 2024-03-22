@@ -141,7 +141,13 @@ const GetAllUsers = async(req , res) => {
         });
 
     } catch (error) {
-        
+      console.log(error);
+      res.status(500).json({
+       status: false,
+       error: {
+           message: "Failed get users due to server error!"
+       }
+      }); 
     }
 }
 
@@ -156,7 +162,9 @@ const GetUserById = async(req , res) => {
         if (!User) {
           return res.status(404).json({
             status: false,
-            success: { message: "No user available for the provided user id!" },
+            error: { 
+              message: "No user available for the provided user id!" 
+            }
           });
         }
     
@@ -297,7 +305,7 @@ const DeleteUser = async(req , res) => {
                 }
             });
         }
-
+        // Delete User
         const DeleteUser =  await User.deleteOne();
 
         if(DeleteUser){

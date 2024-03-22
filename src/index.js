@@ -5,7 +5,7 @@ require("dotenv/config");
 // -------------------- Custom libraries and modules --------------------
 const Configs = require("./configurations");
 const { ConnectDatabase } = require("./api/v1/libraries") ;
-const { UserRoutes } = require("./api/v1/routes")
+const { UserRoutes , DoctorRoutes } = require("./api/v1/routes")
 
 // -------------------- Global Instance --------------------
 const app = express();
@@ -24,6 +24,9 @@ app.get("/" , (req,res) => {
 
 // -------------------- User Routes --------------------
 app.use("/api/users" , UserRoutes);
+
+// -------------------- Doctor Routes ---------------
+app.use("/api/doctor" , DoctorRoutes);
 
 // -------------------- Error route --------------------
 app.use((req , res) => {
