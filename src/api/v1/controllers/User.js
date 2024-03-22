@@ -138,11 +138,146 @@ const GetAllUsers = async(req , res) => {
             success:{
                 message: "Success!"
             }
-        })
+        });
+
     } catch (error) {
         
     }
 }
+
+// -------------------- Function to Get user by Id --------------------
+const GetUserById = async(req , res) => {
+    // Request params
+    const { UserId } = req.params;
+
+    try {
+        // Check user already available
+        const User = await UserModel.findOne({ _id: UserId }).exec();
+        if (!User) {
+          return res.status(404).json({
+            status: false,
+            success: { message: "No user available for the provided user id!" },
+          });
+        }
+    
+        return res.status(200).json({
+          status: true,
+          user: User,
+          success: { message: "Successfully fetched the user!" },
+        });
+
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: false,
+          success: { message: "Failed to fetch the user due to server error!" },
+        });
+      }
+};
+
+// --------------------  Function to Update User details --------------------
+const UpdateUserById = async (req, res) => {
+    // Request params
+    const { UserId } = req.params;
+  
+    // Request body
+    const { newPassword, currentPassword, dateUpdated, timeUpdated } = req.body;
+  
+    // Global variables
+    let UpdatedUser, EncryptedPassword;
+  
+    try {
+      // Check user already available
+      const User = await UserModel.findOne({ _id: UserId }).exec();
+      if (!User) {
+        return res.status(404).json({
+          status: false,
+          error: { message: "No user available for the provided user id!" },
+        });
+      }
+  
+      // Properties validation
+      if (!dateUpdated || !timeUpdated) {
+        return res.status(400).json({
+          status: false,
+          error: {
+            message: "Not provided updated date or time information!",
+          },
+        });
+      }
+      if (currentPassword && newPassword) {
+        // Check if the obejct has correct properties count
+        const PropertiesCount = Object.keys(req.body).length;
+        if (PropertiesCount != 4) {
+          return res.status(400).json({
+            status: false,
+            error: {
+              message: "Invalid number of properties for the password update!",
+            },
+          });
+        }
+  
+        // Check if current password matches
+        const PassMatch = await bcrypt.compare(currentPassword, User.password);
+  
+        if (!PassMatch) {
+          return res.status(400).json({
+            status: false,
+            error: { message: "Wrong current password!" },
+          });
+        }
+  
+        // Encrypt password
+        EncryptedPassword = await bcrypt.hash(newPassword, 8);
+      } else if (!currentPassword && newPassword) {
+        return res.status(400).json({
+          status: false,
+          error: { message: "Not provided the current password!" },
+        });
+      } else if (!newPassword && currentPassword) {
+        return res.status(400).json({
+          status: false,
+          error: { message: "Not provided the new password!" },
+        });
+      }
+  
+      // Update user
+      UpdatedUser = await UserModel.findOneAndUpdate(
+        { _id: UserId },
+        {
+          $set:
+            currentPassword && newPassword
+              ? {
+                  password: EncryptedPassword,
+                  dateUpdated,
+                  timeUpdated,
+                }
+              : req.body,
+        },
+        {
+          new: true,
+        }
+      );
+  
+      return res.status(200).json({
+        status: true,
+        user: UpdatedUser,
+        success: {
+          message:
+            currentPassword && newPassword
+              ? "Successfully updated the password of the user!"
+              : "Successfully updated the basic information of the user!",
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        success: { message: "Failed to update the user due to server error!" },
+      });
+    }
+  };
+  
 
 // -------------------- Function to Delete User ------------------------
 const DeleteUser = async(req , res) => {
@@ -185,4 +320,4 @@ const DeleteUser = async(req , res) => {
     }
 }
 
-module.exports = { RegisterNewUser , LoginUser , GetAllUsers , DeleteUser };
+module.exports = { RegisterNewUser , LoginUser , GetAllUsers , GetUserById ,  UpdateUserById , DeleteUser };
