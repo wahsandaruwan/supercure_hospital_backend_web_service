@@ -1,7 +1,28 @@
 // -------------------- Imports --------------------
-const { RegisterNewUser , LoginUser , GetAllUsers , GetUserById ,  UpdateUserById , DeleteUser } = require("./User");
-const { SaveDoctorDetails , GetDoctorDetailsById , UpdateDoctorDetails ,  DeleteDetails } = require("./Doctor");
-const { SavePatientDetails } = require("./Patient");
+const { 
+        RegisterNewUser, 
+        LoginUser,
+        GetAllUsers, 
+        GetUserById,  
+        UpdateUserById, 
+        DeleteUser 
+} = require("./User");
+
+const { 
+        SaveDoctorDetails, 
+        GetAllDoctorDetails, 
+        GetDoctorDetailsById, 
+        UpdateDoctorDetails,  
+        DeleteDoctorDetails 
+} = require("./Doctor");
+
+const { 
+        SavePatientDetails, 
+        GetAllPatientDetails, 
+        GetPatientDetailsById, 
+        UpdatePatientDetails, 
+        DeletePatientDetails 
+} = require("./Patient");
 
 // -------------------- Exports --------------------
 module.exports = {
@@ -12,8 +33,13 @@ module.exports = {
     GetUserById,
     UpdateUserById,
     SaveDoctorDetails,
+    GetAllDoctorDetails,
     GetDoctorDetailsById,
     UpdateDoctorDetails,
-    DeleteDetails,
+    DeleteDoctorDetails,
     SavePatientDetails,
+    GetAllPatientDetails,
+    GetPatientDetailsById,
+    UpdatePatientDetails,
+    DeletePatientDetails,
 };

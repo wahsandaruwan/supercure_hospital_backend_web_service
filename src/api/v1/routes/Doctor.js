@@ -2,7 +2,13 @@
 const express = require("express");
 
 // -------------------- Custom libraries and modules --------------------
-const { SaveDoctorDetails , GetDoctorDetailsById , UpdateDoctorDetails , DeleteDetails } = require("../controllers");
+const { 
+        SaveDoctorDetails, 
+        GetAllDoctorDetails, 
+        GetDoctorDetailsById, 
+        UpdateDoctorDetails, 
+        DeleteDoctorDetails 
+} = require("../controllers");
 
 // --------------- Initialize the Router ---------------
 const router = express.Router();
@@ -11,6 +17,9 @@ const router = express.Router();
 // ----- Save Doctor Details -----
 router.post("/save", SaveDoctorDetails);
 
+// ----- Get All Doctor Details -----
+router.get("/details/all" , GetAllDoctorDetails);
+
 // ----- Get Detais By Id -----
 router.get("/details/:DoctorId" , GetDoctorDetailsById);
 
@@ -18,7 +27,7 @@ router.get("/details/:DoctorId" , GetDoctorDetailsById);
 router.put("/update/:DetailsId" ,UpdateDoctorDetails);
 
 // ----- Delete Doctor Details -----
-router.delete("/delete/:DetailsId" , DeleteDetails);
+router.delete("/delete/:DetailsId" , DeleteDoctorDetails);
 
 
 module.exports = router;

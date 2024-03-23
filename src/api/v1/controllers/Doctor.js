@@ -71,6 +71,31 @@ const SaveDoctorDetails = async(req, res) => {
       }
 }
 
+// ------------------- Get All Doctor details --------------------
+const GetAllDoctorDetails = async(req , res) => {
+    try {
+        const All = await DoctorModel.find().exec();
+
+        return res.status(200).json({
+            status:true,
+            users: All,
+            success:{
+                message: "Success!"
+            }
+        });
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+       status: false,
+       error: {
+           message: "Failed get users due to server error!"
+       }
+      }); 
+    }
+}
+
+
 // ------------------- Function to get  doctor details by Id -------------------
 const GetDoctorDetailsById = async(req , res) => {
     // Request params
@@ -135,6 +160,9 @@ const UpdateDoctorDetails = async(req , res) => {
     // Request params
     const { DetailsId } = req.params;
 
+    // Request body
+    const { dateUpdated , timeUpdated } = req.body;
+
     try {
         // Check Details Id exsits or not
         const Detail = await DoctorModel.findOne({_id:DetailsId}).exec();
@@ -146,9 +174,19 @@ const UpdateDoctorDetails = async(req , res) => {
                 }
             });
         }
+
+        // Check Updated date and time exist or not
+        if(!dateUpdated || !timeUpdated){
+            return res.status(400).json({
+                status: false,
+                error: {
+                    message: "Missing Updated Date or Updated Time!"
+                }
+            });
+        }
         
         // Update Details
-        const UpdateDetails = await DoctorModel.findOneAndUpdate(
+        const UpdatedDetails = await DoctorModel.findOneAndUpdate(
             { _id: DetailsId },
             {
                 $set: req.body,
@@ -160,7 +198,7 @@ const UpdateDoctorDetails = async(req , res) => {
 
         return res.status(200).json({
             status: true,
-            details: UpdateDetails,
+            details: UpdatedDetails,
             success: {
                 message: "Update Successfully!"
             }
@@ -178,7 +216,7 @@ const UpdateDoctorDetails = async(req , res) => {
 }
 
 // -------------------- Function to delete doctor details --------------------
-const DeleteDetails = async(req, res) => {
+const DeleteDoctorDetails = async(req, res) => {
      // Request params
      const { DetailsId } = req.params;
     
@@ -215,4 +253,10 @@ const DeleteDetails = async(req, res) => {
     }   
 }
 
-module.exports = { SaveDoctorDetails , GetDoctorDetailsById , UpdateDoctorDetails , DeleteDetails };
+module.exports = { 
+    SaveDoctorDetails, 
+    GetAllDoctorDetails, 
+    GetDoctorDetailsById, 
+    UpdateDoctorDetails, 
+    DeleteDoctorDetails 
+};
