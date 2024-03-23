@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 
 // ---------- Doctor schema -----------
 const DoctorModel = new mongoose.Schema({
-    userId:{
+    doctorId:{
         type:String,
         require: true
     },
     degree:{
-        type:String,
+        type:[String],
         require: true
     },
     specialty: {
-        type: String,
+        type: [String],
         require: true
     },
     dateCreated: {

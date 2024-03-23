@@ -1,7 +1,4 @@
-// -------------------- Thirdparty Libraries and modules --------------------
-const bcrypt = require("bcrypt");
-
-// -------------------- Custom Libraries and modules ------------------------
+// -------------------- Custom Libraries and modules --------------------
 const { UserModel } = require("../models");
 const { DoctorModel } = require("../models");
 
@@ -9,7 +6,7 @@ const { DoctorModel } = require("../models");
 const SaveDoctorDetails = async(req, res) => {
     // Request body
     const {
-        userId,
+        doctorId,
         degree,
         specialty,
         dateCreated,
@@ -19,8 +16,8 @@ const SaveDoctorDetails = async(req, res) => {
       } = req.body;
 
       try {
-        // Check UserId already exsit or not
-        const Doctor = await UserModel.findOne({_id:userId}).exec();
+        // Check DoctorId already exsit or not
+        const Doctor = await UserModel.findOne({_id:doctorId}).exec();
 
         if(!Doctor){
             return res.status(404).json({
@@ -45,7 +42,7 @@ const SaveDoctorDetails = async(req, res) => {
 
         // New Doctor Details
         const NewDoctorData =  new DoctorModel({
-            userId,
+            doctorId,
             degree,
             specialty,
             dateCreated,
@@ -61,7 +58,7 @@ const SaveDoctorDetails = async(req, res) => {
             success: {
                 message: "Details Save Successfully!"
             }    
-        })
+        });
         
       } catch (error) {
         console.log(error);
@@ -74,7 +71,7 @@ const SaveDoctorDetails = async(req, res) => {
       }
 }
 
-// -------------------- Function to get  doctor details by Id ------------------------
+// ------------------- Function to get  doctor details by Id -------------------
 const GetDoctorDetailsById = async(req , res) => {
     // Request params
     const { DoctorId } = req.params;
@@ -104,7 +101,7 @@ const GetDoctorDetailsById = async(req , res) => {
       }
 
       // Check details exits or not
-      const Details =  await DoctorModel.find({userId:DoctorId}).exec();
+      const Details =  await DoctorModel.find({doctorId:DoctorId}).exec();
       if(!Details){
         return res.status(404).json({
             status: false,
@@ -133,7 +130,7 @@ const GetDoctorDetailsById = async(req , res) => {
     }
 }
 
-// ------------------- Function to Update Doctor Details --------------------
+// ------------------- Function to Update Doctor Details -------------------
 const UpdateDoctorDetails = async(req , res) => {
     // Request params
     const { DetailsId } = req.params;
@@ -205,7 +202,7 @@ const DeleteDetails = async(req, res) => {
             success: {
                 message: "Delete SuccessFully!"
             }
-        })
+        });
 
     } catch (error) {
         console.log(error);
@@ -215,8 +212,7 @@ const DeleteDetails = async(req, res) => {
                 message: "Failed to Delete details due to server error!"
             }
         }); 
-    }
-    
+    }   
 }
 
 module.exports = { SaveDoctorDetails , GetDoctorDetailsById , UpdateDoctorDetails , DeleteDetails };
