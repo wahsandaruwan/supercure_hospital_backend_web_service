@@ -127,7 +127,7 @@ const GetDoctorDetailsById = async(req , res) => {
       // Check details exits or not
       const Details =  await DoctorModel.find({doctorId:DoctorId}).exec();
       if(!Details){
-        return res.status(404).json({
+        return res.status(400).json({
             status: false,
             error: {
                 message: "Not Data Found!"
@@ -237,7 +237,7 @@ const DeleteDoctorDetails = async(req, res) => {
         return res.status(200).json({
             status: true,
             success: {
-                message: "Delete SuccessFully!"
+                message: "SuccessFully Deleted!"
             }
         });
 

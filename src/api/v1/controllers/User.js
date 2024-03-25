@@ -89,7 +89,7 @@ const LoginUser = async(req , res) => {
        const User = await UserModel.findOne({emailAddress}).exec(); 
 
        if(!User){
-        return res.status(401).json({
+        return res.status(400).json({
             status:false,
             error: {
                 message: "Wrong Email Address!"

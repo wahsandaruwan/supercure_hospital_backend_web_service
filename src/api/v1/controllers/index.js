@@ -26,6 +26,10 @@ const {
 
 const {
         SaveNewAppointment,
+        GetAllAppointments,
+        GetAppoinmentsById,
+        UpdateAppointment,
+        DeleteAppointment
 } = require("./Appointment");
 
 // -------------------- Exports --------------------
@@ -47,4 +51,8 @@ module.exports = {
     UpdatePatientDetails,
     DeletePatientDetails,
     SaveNewAppointment,
+    GetAllAppointments,
+    GetAppoinmentsById,
+    UpdateAppointment,
+    DeleteAppointment
 };
