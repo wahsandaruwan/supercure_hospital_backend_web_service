@@ -24,6 +24,10 @@ const {
         DeletePatientDetails 
 } = require("./Patient");
 
+const {
+        SaveNewAppointment,
+} = require("./Appointment");
+
 // -------------------- Exports --------------------
 module.exports = {
     RegisterNewUser,
@@ -42,4 +46,5 @@ module.exports = {
     GetPatientDetailsById,
     UpdatePatientDetails,
     DeletePatientDetails,
+    SaveNewAppointment,
 };

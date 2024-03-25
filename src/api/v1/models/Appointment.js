@@ -18,6 +18,22 @@ const AppointmentModel = new mongoose.Schema({
     appointmentTime: {
         type: String,
         require:true
+    },
+    dateCreated: {
+        type: String,
+        require: true
+    },
+    timeCreated: {
+        type: String,
+        require: true
+    },
+    dateUpdated: {
+        type: String,
+        require: true
+    },
+    timeUpdated: {
+        type: String,
+        required: true,
     }
 },{timestamps: true});
 

@@ -1,6 +1,5 @@
 // -------------------- Custom Libraries and modules --------------------
-const { UserModel } = require("../models");
-const { DoctorModel } = require("../models");
+const { UserModel , DoctorModel } = require("../models");
 
 // -------------------- Function to save Doctor Details --------------------
 const SaveDoctorDetails = async(req, res) => {
