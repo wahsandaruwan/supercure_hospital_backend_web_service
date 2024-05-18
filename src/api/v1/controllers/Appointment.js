@@ -12,6 +12,7 @@ const SaveNewAppointment = async(req , res) => {
         patientId,
         appointmentDate,
         appointmentTime,
+        appointmentState,
         dateCreated,
         timeCreated,
         dateUpdated,
@@ -34,7 +35,7 @@ const SaveNewAppointment = async(req , res) => {
         // Check User Type of Doctor
         const UserTypeDoctor = Doctor.userType;
 
-        if(UserTypeDoctor != "doctor"){
+        if(UserTypeDoctor != "Doctor"){
             return res.status(403).json({
                 status: false,
                 error: {
@@ -63,7 +64,7 @@ const SaveNewAppointment = async(req , res) => {
             appointmentTime: appointmentTime
         }).exec();
 
-        if(ExistingDoctorAppointment){
+        if(ExistingDoctorAppointment && ExistingDoctorAppointment.appointmentState !== "Cansel"){
             return res.status(400).json({
                 status:false,
                 error: {
@@ -79,7 +80,7 @@ const SaveNewAppointment = async(req , res) => {
             appointmentTime: appointmentTime 
         }).exec();
 
-        if(ExistingPatientAppointment){
+        if(ExistingPatientAppointment && ExistingPatientAppointment.appointmentState !== "Cansel"){
             return res.status(400).json({
                 status:false,
                 error: {
@@ -94,6 +95,7 @@ const SaveNewAppointment = async(req , res) => {
             patientId,
             appointmentDate,
             appointmentTime,
+            appointmentState,
             dateCreated,
             timeCreated,
             dateUpdated,
@@ -142,7 +144,7 @@ const GetAppoinmentsById = async(req , res) => {
 
         // Get User Type
         const UserType = User.userType;
-        if(UserType === "doctor"){
+        if(UserType === "Doctor"){
             Appointments = await AppointmentModel.find({doctorId:UserId}).exec();
         }else{
             Appointments = await AppointmentModel.find({patientId:UserId}).exec();

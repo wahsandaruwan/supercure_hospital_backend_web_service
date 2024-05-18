@@ -1,5 +1,6 @@
 // -------------------- Third-party libraries and modules --------------------
 const express = require("express");
+const cors = require("cors");
 require("dotenv/config");
 
 // -------------------- Custom libraries and modules --------------------
@@ -16,6 +17,8 @@ const PORT = Configs.PORT || 3308;
 // -------------------- Accept json --------------------
 app.use(express.json());
 
+// -------------------- Allow CORS --------------------
+app.use(cors());
 
 // -------------------- Base route --------------------
 app.get("/" , (req,res) => {

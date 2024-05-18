@@ -15,6 +15,10 @@ const AppointmentModel = new mongoose.Schema({
         type: String,
         require:true
     },
+    appointmentState: {
+        type:String,
+        require: true
+    },
     appointmentTime: {
         type: String,
         require:true
