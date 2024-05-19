@@ -7,10 +7,6 @@ const DoctorModel = new mongoose.Schema({
         type:String,
         require: true
     },
-    category:{
-      type:String,
-      require:true,
-    },
     degree:{
         type:[String],
         require: true

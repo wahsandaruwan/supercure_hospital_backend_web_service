@@ -23,7 +23,7 @@ router.post("/register", RegisterNewUser);
 router.post("/login" , LoginUser);
 
 // ----- Get All users -----
-router.get("/all" , GetAllUsers);
+router.get("/all" , AuthenticateUser , AuthorizeUser(["Admin"]) , GetAllUsers);
 
 // ----- Get User by Id -----
 router.get("/one/:UserId" , AuthenticateUser , AuthorizeUser(["Admin","Doctor","Patient"]) ,  GetUserById);
