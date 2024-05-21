@@ -114,7 +114,7 @@ const GetPatientDetailsById = async(req , res) => {
       // Check User Type
       const UserType = Patient.userType;
 
-      if(UserType != "patient"){
+      if(UserType != "Patient"){
           return res.status(403).json({
               status: false,
               error: {

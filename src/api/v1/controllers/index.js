@@ -13,7 +13,8 @@ const {
         GetAllDoctorDetails, 
         GetDoctorDetailsById, 
         UpdateDoctorDetails,  
-        DeleteDoctorDetails 
+        DeleteDoctorDetails,
+        GetDoctorBySpecialiedField
 } = require("./Doctor");
 
 const { 
@@ -54,5 +55,6 @@ module.exports = {
     GetAllAppointments,
     GetAppoinmentsById,
     UpdateAppointment,
-    DeleteAppointment
+    DeleteAppointment,
+    GetDoctorBySpecialiedField
 };

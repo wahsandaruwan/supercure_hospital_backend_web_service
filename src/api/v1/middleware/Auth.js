@@ -16,7 +16,7 @@ const AuthenticateUser = (req, res, next) => {
         if (!VerifiedToken.status) {
           return res.status(401).json({
             status: false,
-            error: { message: "Invalid access token!" },
+            error: { message: "Invalid access token. Login again!" },
           });
         }
 

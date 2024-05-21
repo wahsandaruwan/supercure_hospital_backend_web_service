@@ -30,7 +30,7 @@ const SaveDoctorDetails = async(req, res) => {
         // Check User Type
         const UserType = Doctor.userType;
 
-        if(UserType != "doctor"){
+        if(UserType != "Doctor"){
             return res.status(403).json({
                 status: false,
                 error: {
@@ -38,6 +38,9 @@ const SaveDoctorDetails = async(req, res) => {
                 }
             });
         }
+
+        // Delete existing doctor details if they exist
+        await DoctorModel.findOneAndDelete({ doctorId }).exec();
 
         // New Doctor Details
         const NewDoctorData =  new DoctorModel({
@@ -115,7 +118,7 @@ const GetDoctorDetailsById = async(req , res) => {
       // Check User Type
       const UserType = Doctor.userType;
 
-      if(UserType != "doctor"){
+      if(UserType != "Doctor"){
           return res.status(403).json({
               status: false,
               error: {
@@ -151,6 +154,58 @@ const GetDoctorDetailsById = async(req , res) => {
                 message: "Failed to Get details due to server error!"
             }
         });  
+    }
+}
+
+// ------------------ Function to get DoctorDetails by specilize --------------------
+const GetDoctorBySpecialiedField = async(req , res) => {
+    // Request body
+    const { specialties } = req.body;
+
+    try {
+        // Find doctors based on the specified specialties
+        const doctors = await DoctorModel.find({ specialty: { $in: specialties } }).exec();
+
+        if (!doctors || doctors.length === 0) {
+            return res.status(404).json({
+                status: false,
+                error: {
+                    message: `No doctors found with any of the specified specialties`
+                }
+            });
+        }
+
+        // Extract doctorIds
+        const doctorIds = doctors.map(doctor => doctor.doctorId);
+
+        // Find user details for the found doctors
+        const userDetails = await UserModel.find({ _id: { $in: doctorIds } }).select("fullName _id").exec();
+
+        // Map user details to doctors
+        const doctorsWithDetails = doctors.map(doctor => {
+            const userDetailsForDoctor = userDetails.find(user => user._id.toString() === doctor.doctorId.toString());
+            return {
+                _id: userDetailsForDoctor._id,
+                name: userDetailsForDoctor.fullName
+            };
+        });
+
+        return res.status(200).json({
+            status: true,
+            doctors: doctorsWithDetails,
+            success: {
+                message: `Doctors found with one of the specified specialties`
+            }
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            error: {
+                message: "Failed to get doctors by specialties due to server error!"
+            }
+        });
     }
 }
 
@@ -257,5 +312,6 @@ module.exports = {
     GetAllDoctorDetails, 
     GetDoctorDetailsById, 
     UpdateDoctorDetails, 
-    DeleteDoctorDetails 
+    DeleteDoctorDetails,
+    GetDoctorBySpecialiedField 
 };

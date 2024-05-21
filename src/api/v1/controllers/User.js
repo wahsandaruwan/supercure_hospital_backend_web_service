@@ -185,7 +185,7 @@ const GetUserById = async(req , res) => {
         console.log(err);
         return res.status(500).json({
           status: false,
-          success: { message: "Failed to fetch the user due to server error!" },
+          error: { message: "Failed to fetch the user due to server error!" },
         });
       }
 };
@@ -288,7 +288,7 @@ const UpdateUserById = async (req, res) => {
       console.log(err);
       return res.status(500).json({
         status: false,
-        success: { message: "Failed to update the user due to server error!" },
+        error: { message: "Failed to update the user due to server error!" },
       });
     }
   };

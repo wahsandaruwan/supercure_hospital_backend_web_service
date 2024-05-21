@@ -44,8 +44,11 @@ const SaveNewAppointment = async(req , res) => {
             });
         }
 
+        // setAppointment time
+        const time = appointmentTime.split(" ")[0];
+
         // Convert appointmentDate and appointmentTime to Date objects
-        const AppointmentDateTime = parse(`${appointmentDate}T${appointmentTime}`, "yyyy-MM-dd'T'HH:mm", new Date());
+        const AppointmentDateTime = parse(`${appointmentDate}T${time}`, "yyyy-MM-dd'T'HH:mm", new Date());
         
         // Check if Date is Valid or not
         if (isPast(AppointmentDateTime)) {
@@ -159,9 +162,17 @@ const GetAppoinmentsById = async(req , res) => {
             }); 
         }
 
+        // get doctor name
+        const doctor = await UserModel.findOne({_id:Appointments[0].doctorId}).exec();
+
+        // get patient name
+        const patient = await UserModel.findOne({_id:Appointments[0].patientId}).exec();
+
         return res.status(200).json({
             status: true,
             appointments: Appointments,
+            doctorName: doctor ? doctor.fullName : "Unknown",
+            patientName: patient ? patient.fullName : "Unknown",
             success: {
                 message: "Success!"
             }

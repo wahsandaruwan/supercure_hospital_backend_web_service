@@ -7,7 +7,8 @@ const {
         GetAllDoctorDetails, 
         GetDoctorDetailsById, 
         UpdateDoctorDetails, 
-        DeleteDoctorDetails 
+        DeleteDoctorDetails,
+        GetDoctorBySpecialiedField 
 } = require("../controllers");
 const { AuthenticateUser, AuthorizeUser } = require("../middleware");
 
@@ -26,6 +27,9 @@ router.get("/details/:DoctorId" , AuthenticateUser , AuthorizeUser(["Admin","Doc
 
 // ----- Update Doctor Details -----
 router.put("/update/:DetailsId" , AuthenticateUser , AuthorizeUser(["Doctor"])  ,UpdateDoctorDetails);
+
+// ----- Get doctor by specialized field -----
+router.post("/specialized" , AuthenticateUser , AuthorizeUser(["Patient"]) , GetDoctorBySpecialiedField);
 
 // ----- Delete Doctor Details -----
 router.delete("/delete/:DetailsId" , AuthenticateUser , AuthorizeUser(["Doctor"])  , DeleteDoctorDetails);
