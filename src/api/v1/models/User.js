@@ -33,7 +33,10 @@ const UserModel = new mongoose.Schema({
     dateOfBirth:{
         type: String,
         require:true,
-      },  
+      },
+    imageUrl: {
+      type:String
+    },  
     userType: {
         type: String,
         required: true,

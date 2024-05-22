@@ -193,6 +193,7 @@ const GetDoctorBySpecialiedField = async(req , res) => {
         return res.status(200).json({
             status: true,
             doctors: doctorsWithDetails,
+            details:doctors,
             success: {
                 message: `Doctors found with one of the specified specialties`
             }

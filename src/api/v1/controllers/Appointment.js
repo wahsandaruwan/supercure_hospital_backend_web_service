@@ -162,17 +162,27 @@ const GetAppoinmentsById = async(req , res) => {
             }); 
         }
 
-        // get doctor name
-        const doctor = await UserModel.findOne({_id:Appointments[0].doctorId}).exec();
+        const sendData = await Promise.all(Appointments.map(async (appointment) => {
+            const doctor = await UserModel.findOne({ _id: appointment.doctorId }).exec();
+            const patient = await UserModel.findOne({ _id: appointment.patientId }).exec();
 
-        // get patient name
-        const patient = await UserModel.findOne({_id:Appointments[0].patientId}).exec();
+            return {
+                id: appointment._id,
+                patientName: patient ? patient.fullName : "Unknown",
+                doctorName: doctor ? doctor.fullName : "Unknown",
+                patientImage: patient ? patient.imageUrl : "",
+                doctorImage: doctor ? doctor.imageUrl : "",
+                time: appointment.appointmentTime,
+                date: appointment.appointmentDate,
+                status: appointment.appointmentState
+            };
+        }));
+
+        console.log(sendData);
 
         return res.status(200).json({
             status: true,
-            appointments: Appointments,
-            doctorName: doctor ? doctor.fullName : "Unknown",
-            patientName: patient ? patient.fullName : "Unknown",
+            appointments: sendData,
             success: {
                 message: "Success!"
             }
