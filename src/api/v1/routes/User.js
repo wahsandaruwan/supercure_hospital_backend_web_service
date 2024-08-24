@@ -26,7 +26,7 @@ router.post("/login" , LoginUser);
 router.get("/all" , AuthenticateUser , AuthorizeUser(["Admin"]) , GetAllUsers);
 
 // ----- Get User by Id -----
-router.get("/one/:UserId" , AuthenticateUser , AuthorizeUser(["Admin","Doctor","Patient"]) ,  GetUserById);
+router.get("/one/:UserId" , AuthenticateUser , AuthorizeUser(["Admin","Doctor","Patient" , "Blocked"]) ,  GetUserById);
 
 // ----- Update User details -----
 router.put("/update/:UserId", AuthenticateUser , AuthorizeUser(["Admin","Doctor","Patient"]) , UpdateUserById);
